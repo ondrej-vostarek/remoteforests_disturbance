@@ -1,13 +1,13 @@
 # 0. setup ----------------------------------------------------------------
 
-# R 3.6.3 (2020-02-29)
+# R 4.2.3 (2023-03-15) "Shortstop Beagle"
 
-library(pool) # 0.1.4.3
-library(tidyverse) # 1.3.0 (dplyr 1.0.7, forcats 0.5.0, ggplot2 3.3.5, purr 0.3.4, readr 1.3.1, stringr 1.4.0, tibble 3.0.0, tidyr 1.0.2)
-library(pracma) # 2.2.9
-library(lme4) # 1.1-27.1 (Matrix 1.2-18)
-library(RPostgreSQL) # 0.6-2 (DBI 1.1.0)
-library(zoo) # 1.8-7
+library(pool) # 1.0.3
+library(tidyverse) # 2.0.0 (dplyr 1.1.4, forcats 1.0.0, ggplot2 3.5.0, lubridate 1.9.3, purrr 1.0.2, readr 2.1.5, stringr 1.5.1, tibble 3.2.1, tidyr 1.3.1)
+library(pracma) # 2.4.4
+library(lme4) # 1.1-35.1 (Matrix 1.5-3)
+library(RPostgreSQL) # 0.7-6 (DBI 1.2.2)
+library(zoo) # 1.8-12
 
 source("new/pw.R")
 
