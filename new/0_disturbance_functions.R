@@ -13,8 +13,8 @@ distGetData <- function(ID){
     filter(core_id %in% ID) %>%
     select(core_id, ring_id = id, year, incr_mm) %>%
     collect() %>%
-    arrange(core_id, year) %>%
     group_by(core_id) %>%
+    arrange(year, .by_group = T) %>%
     mutate(incr_mm = if_else(incr_mm %in% 0, NA_real_, incr_mm),
            incr_mm = na.approx(incr_mm)) %>%
     ungroup()
@@ -64,8 +64,8 @@ growthCalculate <- function(data.in, windowLength = 10){
   
   # calculate dbh, age, and growth change
   growth.tbl <- inner_join(data.in$core, data.in$ring, by = "core_id") %>%
-    arrange(core_id, year) %>%
     group_by(core_id) %>%
+    arrange(year, .by_group = T) %>%
     mutate(#missing_mm = ifelse(is.na(missing_mm), 0, missing_mm),
            #missing_years = ifelse(is.na(missing_years, 0, missing_years)),
            dbh_growth = ifelse(row_number() == 1, incr_mm + missing_mm, incr_mm),
@@ -146,8 +146,8 @@ eventCalculate <- function(data.in, gapAge = c(5:14), nprol = 7){
   
   # calculate releases
   release.event <- data.in$growth %>%
-    arrange(core_id, year) %>%
     group_by(core_id) %>%
+    arrange(year, .by_group = T) %>%
     mutate(event = ifelse(row_number() %in% peakDetection(x = ai, threshold = aith[first(sp_group_dist)], nups = 1, mindist = 30, trim = T), "release", NA),
            event = ifelse(lead(fg, nprol) <= pg, NA, event),
            event = ifelse(lag(pg, nprol) >= fg, NA, event),
@@ -159,8 +159,8 @@ eventCalculate <- function(data.in, gapAge = c(5:14), nprol = 7){
   # calculate gap origin 
   gap.event <- data.in$growth %>% 
     filter(age %in% gapAge) %>%
-    arrange(core_id, year) %>%
     group_by(core_id, sp_group_dist) %>%
+    arrange(year, .by_group = T) %>%
     summarise(incr_mean = mean(incr_mm, na.rm = T),
               nyears = length(incr_mm[!is.na(incr_mm)]),
               year = min(year) - (min(age) - 1)) %>%
@@ -180,8 +180,8 @@ eventCalculate <- function(data.in, gapAge = c(5:14), nprol = 7){
   
   # merge events together -> perform 'keepRelease' check
   data.out <- bind_rows(release.event, gap.event, no.event) %>%
-    arrange(core_id, year) %>%
     group_by(core_id) %>%
+    arrange(year, .by_group = T) %>%
     mutate(keeprel = keepRelease(year, type = event, n = 30)) %>%
     ungroup() %>%
     filter(keeprel %in% "yes") %>%

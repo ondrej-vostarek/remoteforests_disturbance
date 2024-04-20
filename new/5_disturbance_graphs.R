@@ -1,11 +1,11 @@
 # 0. setup ----------------------------------------------------------------
 
-# R 3.6.3 (2020-02-29)
+# R 4.2.3 (2023-03-15) "Shortstop Beagle"
 
-library(ggrepel) # 0.8.2
-library(pool) # 0.1.4.3
-library(tidyverse) # 1.3.0 (dplyr 1.0.7, forcats 0.5.0, ggplot2 3.3.5, purr 0.3.4, readr 1.3.1, stringr 1.4.0, tibble 3.0.0, tidyr 1.0.2)
-library(RPostgreSQL) # 0.6-2 (DBI 1.1.0)
+library(ggrepel) # 0.9.5
+library(pool) # 1.0.3
+library(tidyverse) # 2.0.0 (dplyr 1.1.4, forcats 1.0.0, ggplot2 3.5.0, lubridate 1.9.3, purrr 1.0.2, readr 2.1.5, stringr 1.5.1, tibble 3.2.1, tidyr 1.3.1)
+library(RPostgreSQL) # 0.7-6 (DBI 1.2.2)
 
 source("new/pw.R")
 
@@ -34,7 +34,7 @@ for (p in unique(data.all$plotid)) {
     ggplot(data.gg) +
       geom_histogram(aes(year, weight = ca_pct), breaks = seq(1590, 2010, 10), fill = "grey80") +
       geom_histogram(aes(year, weight = ca_pct), binwidth = 1, fill = "grey20") +
-      geom_line(aes(year, kde), size = 1, colour = "grey20") +
+      geom_line(aes(year, kde), linewidth = 1, colour = "grey20") +
       geom_point(data = data.gg %>% filter(peak %in% "yes"), aes(year, kde), shape = 21, colour = "grey20", fill = "#78c2ef", size = 3) +
       geom_text_repel(data = data.gg %>% filter(peak %in% "yes"), aes(year, kde, label = year), colour = "#78c2ef", size = 3) +
       geom_hline(aes(yintercept = 10), linetype = 2, colour = "grey80") +

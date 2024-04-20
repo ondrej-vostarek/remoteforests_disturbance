@@ -1,18 +1,18 @@
 # 0. setup ----------------------------------------------------------------
 
-# R 3.6.3 (2020-02-29)
+# R 4.2.3 (2023-03-15) "Shortstop Beagle"
 
-library(DHARMa) # 0.4.4
-library(effects) # 4.2.-0 (carData 3.0-4)
-# ncf 1.2-9
-library(performance) # 0.8.0
-library(pool) # 0.1.4.3
-library(tidyverse) # 1.3.0 (dplyr 1.0.7, forcats 0.5.0, ggplot2 3.3.5, purr 0.3.4, readr 1.3.1, stringr 1.4.0, tibble 3.0.0, tidyr 1.0.2)
-library(pracma) # 2.2.9
+library(DHARMa) # 0.4.6
+library(effects) # 4.2.-2 (carData 3.0-5)
+# ncf 1.3-2
+library(performance) # 0.11.0
+library(pool) # 1.0.3
+library(tidyverse) # 2.0.0 (dplyr 1.1.4, forcats 1.0.0, ggplot2 3.5.0, lubridate 1.9.3, purrr 1.0.2, readr 2.1.5, stringr 1.5.1, tibble 3.2.1, tidyr 1.3.1)
+library(pracma) # 2.4.4
 library(cutpointr) # 1.1.2
-library(lme4) # 1.1-27.1 (Matrix 1.2-18)
-library(RPostgreSQL) # 0.6-2 (DBI 1.1.0)
-library(zoo) # 1.8-7
+library(lme4) # 1.1-35.1 (Matrix 1.5-3)
+library(RPostgreSQL) # 0.7-6 (DBI 1.2.2)
+library(zoo) # 1.8-12
 
 source("new/pw.R")
 
@@ -111,8 +111,8 @@ plot(ncf::spline.correlog(x = data.broad$lng, y = data.broad$lat, z = residuals(
 #   inner_join(., tbl(KELuser, "plot") %>% filter(id %in% plot.id), by = c("plot_id" = "id")) %>%
 #   select(date, treeid, species, sp_group_dist, year, incr_mm) %>%
 #   collect() %>%
-#   arrange(date, treeid, year) %>%
 #   group_by(date, treeid) %>%
+#   arrange(year, .by_group = T) %>%
 #   mutate(incr_mm = if_else(incr_mm %in% 0, NA_real_, incr_mm),
 #          incr_mm = na.approx(incr_mm),
 #          pg = priorGrowth(incr_mm, windowLength = 10),
@@ -153,8 +153,8 @@ ai <- data.ai %>%
 #   select(date, treeid, species, sp_group_dist, growth, missing_years, year, incr_mm) %>%
 #   collect() %>%
 #   inner_join(., ai %>% select(sp_group_dist, ai_mm), by = "sp_group_dist") %>%
-#   arrange(date, treeid, year) %>%
 #   group_by(date, treeid, species, sp_group_dist, growth) %>%
+#   arrange(year, .by_group = T) %>%
 #   mutate(incr_mm = if_else(incr_mm %in% 0, NA_real_, incr_mm),
 #          incr_mm = na.approx(incr_mm),
 #          pg = priorGrowth(incr_mm, windowLength = 10),
@@ -235,8 +235,8 @@ plot(dbh)
 #   inner_join(., tbl(KELuser, "plot") %>% filter(id %in% plot.id), by = c("plot_id" = "id")) %>%
 #   select(date, treeid, dbh_mm, missing_mm, missing_years, year, incr_mm) %>%
 #   collect() %>%
-#   arrange(date, treeid, year) %>%
 #   group_by(date, treeid) %>%
+#   arrange(year, .by_group = T) %>%
 #   mutate(incr_mm = if_else(incr_mm %in% 0, NA_real_, incr_mm),
 #          incr_mm = na.approx(incr_mm),
 #          dbh_growth = ifelse(row_number() == 1, incr_mm + missing_mm, incr_mm),
@@ -253,8 +253,8 @@ data.age <- tbl(KELuser, "dist_data_age") %>% collect()
 
 age <- data.age %>%
   filter(dbh_growth >= 251) %>%
-  arrange(date, treeid, year) %>%
   group_by(date, treeid) %>%
+  arrange(year, .by_group = T) %>%
   filter(row_number() == 1) %>%
   ungroup() %>%
   summarise(age_mean = mean(age),
