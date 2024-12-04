@@ -7,11 +7,11 @@ library(effects) # 4.2.-2 (carData 3.0-5)
 # ncf 1.3-2
 library(performance) # 0.11.0
 library(pool) # 1.0.3
-library(tidyverse) # 2.0.0 (dplyr 1.1.4, forcats 1.0.0, ggplot2 3.5.0, lubridate 1.9.3, purrr 1.0.2, readr 2.1.5, stringr 1.5.1, tibble 3.2.1, tidyr 1.3.1)
+library(tidyverse) # 2.0.0 (dplyr 1.1.4, forcats 1.0.0, ggplot2 3.5.1, lubridate 1.9.3, purrr 1.0.2, readr 2.1.5, stringr 1.5.1, tibble 3.2.1, tidyr 1.3.1)
 library(pracma) # 2.4.4
 library(cutpointr) # 1.1.2
 library(lme4) # 1.1-35.1 (Matrix 1.5-3)
-library(RPostgreSQL) # 0.7-6 (DBI 1.2.2)
+library(RPostgreSQL) # 0.7-6 (DBI 1.2.3)
 library(zoo) # 1.8-12
 
 source("new/pw.R")
