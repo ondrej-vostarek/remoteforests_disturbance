@@ -77,8 +77,8 @@ plot(simulateResiduals(conif))
 
 plot(allEffects(conif, partial.residuals = TRUE))
 
-model_performance(conif) # R2 (cond.) = 0.718, R2 (marg.) = 0.516, RMSE = 0.888
-icc(conif, by_group = TRUE) # plotid = 0.153, subplot = 0.010, stand = 0.254
+model_performance(conif) # R2 (cond.) = 0.714, R2 (marg.) = 0.519, RMSE = 0.887
+icc(conif, by_group = TRUE) # plotid = 0.161, subplot = 0.010, stand = 0.236
 
 plot(ncf::spline.correlog(x = data.conif$lng, y = data.conif$lat, z = residuals(conif), resamp = 10, latlon = T))
 
@@ -96,8 +96,8 @@ plot(simulateResiduals(broad))
 
 plot(allEffects(broad, partial.residuals = TRUE))
 
-model_performance(broad) # R2 (cond.) = 0.692, R2 (marg.) = 0.544, RMSE = 1.642
-icc(broad, by_group = TRUE) # plotid = 0.133, subplot = 0.074, stand = 0.119 
+model_performance(broad) # R2 (cond.) = 0.692, R2 (marg.) = 0.545, RMSE = 1.642
+icc(broad, by_group = TRUE) # plotid = 0.133, subplot = 0.083, stand = 0.106 
 
 plot(ncf::spline.correlog(x = data.broad$lng, y = data.broad$lat, z = residuals(broad), resamp = 10, latlon = T))
 
