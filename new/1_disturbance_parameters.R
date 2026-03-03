@@ -31,6 +31,7 @@ plot.id <- tbl(KELuser, "plot") %>%
 tree.id <- tbl(KELuser, "tree") %>%
   filter(dbh_mm >= 100,
          status %in% 1,
+         integrity %in% 1,
          !treetype %in% c("g", "l", "r", "t"),
          !species %in% c("Lians", "99")) %>%
   pull(id)
