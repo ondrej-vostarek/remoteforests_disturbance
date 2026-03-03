@@ -25,7 +25,7 @@ plot.id <- tbl(KELuser, "plot") %>%
 
 tree.id <- tbl(KELuser, "tree") %>%
   filter(dbh_mm >= 100,
-         !status %in% c(0, 10, 15, 99),
+         !(status %in% 0 & integrity %in% 4) & !status %in% 99, 
          growth %in% c(-1, 1),
          treetype %in% "0" & onplot %in% c(1, 2) | treetype %in% c("m", "x"),
          !species %in% c("Lians", "99")) %>%
@@ -81,7 +81,7 @@ data.unsampled <- tbl(KELuser, "core") %>%
   filter(!treeid %in% c("SLO_KUN_003_016", "SLO_KUN_003_056", "SLO_SKA_008_003")) %>%
   inner_join(., tbl(KELuser, "tree") %>% filter(id %in% local(data.sampled$tree_id)) %>% distinct(., plot_id), by = "plot_id") %>%
   inner_join(., tbl(KELuser, "plot"), by = c("plot_id" = "id")) %>%
-  filter((foresttype %in% "spruce" & !stand %in% "Polana" & !is.na(subcore)) | ((foresttype %in% "beech" | stand %in% "Polana") & (status %in% c(1:4) | !is.na(subcore)))) %>%
+  filter((foresttype %in% "spruce" & !stand %in% "Polana" & !is.na(subcore)) | ((foresttype %in% "beech" | stand %in% "Polana") & (status %in% 1 | !is.na(subcore)))) %>%
   select(-stand, -subplot) %>%
   inner_join(., tbl(KELuser, "spatial_hierarchy"), by = "plotid") %>%
   inner_join(., tbl(KELuser, "species_fk"), by = c("species" = "id")) %>%
